@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" href="../icons/book-multiple copy.svg">
+    <title>Dashboard Home</title>
+    <script src="https://kit.fontawesome.com/53eb5b5946.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../reset.css">
+    <link rel="stylesheet" href="../stylesheet.css">
+    <link rel="stylesheet" href="library-styles.css" class="rel">
+</head>
+<body>
+    <!-- sidebar  -->
+    <div class="sidebar roboto-bold">
+        <div class="dashboard menuItem">
+            <img src="../icons/view-dashboard.svg" alt="" />
+            <h1>Dashboard</h1>
+        </div>
+        <a class="menuItem menu-btn" href="../home-index.html">
+            <img src="../icons/home.svg" alt="" />
+                <h1>Home</h1>
+        </a>
+        <a class="menuItem menu-btn" href="library.html">
+            <img src="../icons/book-multiple.svg" alt="" />
+            <h1>Library</h1>
+        </a>
+        <div class="menuItem menu-btn">
+            <img src="../icons/account.svg" alt="" />
+            <h1>Profile</h1>
+        </div>
+        <div class="menuItem menu-btn">
+            <img src="../icons/clock-outline.svg" alt="" />
+             <h1>History</h1>
+        </div>
+        <div class="menuItem menu-btn">
+            <img src="../icons/account-group.svg" alt="" />
+            <h1>Community</h1>
+        </div>
+        <div class="menuItem menu-btn">
+            <img src="../icons/cog.svg" alt="" />
+            <h1>Settings</h1>
+        </div>
+        <div class="menuItem menu-btn">
+            <img src="../icons/logout.svg" alt="" />
+            <h1>Logout</h1>
+        </div>          
+    </div>
+    <!-- Header section -->
+    <div class="header">
+        <!-- search bar -->
+        <div class="search-bar-container form-floating mb-3">
+            <label for="floatingInput">
+                        <button class="sub-btn">
+                            <i class="fa-solid fa-magnifying-glass" >
+                            </i>
+                        </button>
+            </label>
+            <input type="text" class="search-bar" id="floatingInput" aria-label="search bar">
+        </div>
+            <div class="alert-icon"><i class="fa-regular fa-bell fa-lg"></i></div>
+            <!-- profile -->
+            <div class="user-profile-tab roboto-black">
+                <img class="profile-pic profile-btn" src="../images/832.jpg" alt="profile photo">
+                <p class="roboto-black" style="font-size: 23px;"> Tony Soprano </p>
+            </div>
+            <!-- second row -->
+            <div class="introbar roboto-black">
+                <img src="../images/832.jpg" alt="">
+                <div class="user-name"><p class="intro" >Hi there,</p><p class="second-line">Soprano ( @Tony Soprano)</p></div>
+            </div>
+            <!-- buttons -->
+            <div class="btton-class roboto-regular">
+                <button class="header-btn" role="button"> New </button>
+                    <button class="header-btn" role="button"> Messages </button>
+                    <button class="header-btn" role="button"> Share </button>
+                        
+            </div>
+    </div>
+    <!-- Main content -->
+    <div class="main-content">
+        <h2>Your Books</h2>
+           <!-- Book cards -->
+        <div class="content-container books">     
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">  
+        <footer class="footer">
+            <p>
+                Copyright ©
+            <script>
+                    document.write(new Date().getFullYear())
+             </script>
+                    Divyang Kotian
+            </p>
+            <a href="https://github.com/DivyangKotian" target="_blank">
+                <i class="fab fa-github"></i>
+            </a>
+        </footer>
+    </div>   
+</body>
+<script src="main.js"></script>
+</html>
