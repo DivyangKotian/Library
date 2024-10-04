@@ -368,15 +368,18 @@ body{
     
 }
 
-.card-icons{
+.card-icons {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap:20px;
     padding-top: 5px;
     padding-bottom: 5px;
-    transition: transform 0.4s ease-in-out;
     color: var(--sidebar-color);
+}
+
+.card-icons >*{
+  transition: transform 0.3s ease-in-out;
 }
 
 .card-icons > *:hover{
@@ -430,6 +433,11 @@ body{
     transform: rotate(360deg) scale(1.6);
 }
 
+
+a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit the text color from the parent element */
+}
 
 
 
