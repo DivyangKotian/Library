@@ -12,6 +12,7 @@
     --sidebar-color-highlight:#085e75 ;
     --main-container: #fde9df;
     --footer: #0881a3;
+    --blue-1: #084c61;
     --transition-notSidebar: margin-left 0.4s ease-in;
     --transition-sidebar: width 0.4s ease-in;
     --sidebar-width: clamp(170px, 20.5vw, 325px);
@@ -267,7 +268,7 @@ body{
 }
 
 
-.header-btn {
+.btn {
   align-items: center;
   appearance: none;
   background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, var(--sidebar-color) 100%);
@@ -279,7 +280,6 @@ body{
   cursor: pointer;
   display: inline-flex;
   font-family: "roboto",monospace;
-  height: 39px;
   justify-content: center;
   line-height: 1;
   list-style: none;
@@ -295,21 +295,24 @@ body{
   touch-action: manipulation;
   white-space: nowrap;
   will-change: box-shadow,transform;
-  font-size: 18px;
-  width: 110px;
 }
 
-.header-btn:focus {
+.btn{
+  font-size: 18px;
+  width: 110px;
+  height: 39px;
+}
+.btn:focus {
   box-shadow: #bb8645 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
 }
 
-.header-btn:hover {
+.btn:hover {
   background-image: radial-gradient(100% 100% at 100% 0, var(--header-highlight) 0, #e6bd4f 100%);
   box-shadow: #b6946b 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, var(--header-highlight) 0 -3px 0 inset;
   transform: translateY(-2px);
 }
 
-.header-btn:active {
+.btn:active {
   box-shadow: #e2a34f 0 3px 7px inset;
   transform: translateY(2px);
 }

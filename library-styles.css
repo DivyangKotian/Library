@@ -1,5 +1,6 @@
 
 
+
 body{
   width: 100vw;
   height: 100vh; /* Make sure the height of the body is 100% */
@@ -11,6 +12,11 @@ body{
   grid-template-areas:    "dashboard header header header"
   "dashboard maincontent maincontent maincontent"
   "footer footer footer footer";
+}
+
+.book {
+  position: relative;
+  z-index: 0;
 }
 
 .card-container{
@@ -161,4 +167,166 @@ body{
     left: calc(1.6 * var(--size));
     font-size: calc(.6 * var(--size));
     line-height: 0;
+  }
+
+  .card-status{
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  /* modal styling */
+  .book {
+    position: relative;
+    z-index: 0;
+  }
+  
+  .book > button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: none;
+    background-color: white;
+    padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-weight: 900;
+  }
+
+  .book-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding-top: 8px;
+    margin-bottom: 0.5rem;
+    font-style: oblique;
+    text-decoration: underline;
+    text-decoration-thickness: 0.15rem;
+  }
+  .book-author {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .book-pages {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .read-status-text{
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    margin-top: 0.3rem;
+  }
+
+  .card-container {
+    border-left: 5px solid rgb(180, 1, 1) !important;
+    max-width: 400px;
+  }
+  .read-true {
+    border-left: 5px solid rgb(18, 157, 0) !important;
+  }
+
+  .modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 30vh; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(3, 31, 36, 0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    display: flex;
+    flex-direction: row-reverse;
+    margin: auto;
+    padding: 5px 5px 5px 20px;
+    border: 1px solid #888;
+    width: 350px;
+    border-radius: 10px;
+  }
+  
+  /* The Close Button */
+  .span-close {
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: auto;
+  }
+  
+  .span-close:hover,
+  .span-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 15px;
+  }
+  
+  .form-title {
+    font-size: xx-large;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .modal-form {
+    margin-right: auto;
+    padding-top: 5px;
+  }
+  .modal-form-input {
+    border: 0;
+    margin-left: auto;
+    margin-right: 20%;
+    background-color: rgba(9, 45, 204, 0.198);
+    padding: 0.5rem 1.5rem;
+    outline-color: var(--blue-1);
+    border-radius: 5px;
+  }
+  .modal-input-field {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 20px;
+    gap:10px;
+  }
+
+  .submit-modal-form {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+
+  .form-add-book{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .book-read-status{
+    display: flex;
+    gap:5px;
+    align-items: center;
+  }
+  
+  .submit-modal-btn{
+    width: 65px;
+    height: 27px;
+    margin-top: 10px;
   }

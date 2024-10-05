@@ -43,7 +43,8 @@ function createRead(bookContainer, book) {
     
     const checkHolder = document.createElement('div');  // styling container
     checkHolder.setAttribute('class', 'check');
-    const statusText = document.createElement('h1');
+    const statusText = document.createElement('span');
+    statusText.setAttribute('class','card-status')
     statusText.textContent = '';
 
     // Create the checkbox input

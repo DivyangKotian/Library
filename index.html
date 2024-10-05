@@ -75,9 +75,9 @@
             </div>
             <!-- buttons -->
             <div class="btton-class roboto-regular">
-                <button class="header-btn" role="button"> New </button>
-                    <button class="header-btn" role="button"> Messages </button>
-                    <button class="header-btn" role="button"> Share </button>
+                <button class="header-btn btn" role="button"> New </button>
+                    <button class="header-btn btn" role="button"> Messages </button>
+                    <button class="header-btn btn" role="button"> Share </button>
                         
             </div>
             
@@ -92,12 +92,12 @@
      <!--Form to add new books--> 
     <div class="modal" id="modal">
         <div class="modal-content">
-            <span class="span-close">X</span>
+            <span class="span-close">&times;</span>
             <div class="modal-form">
                 <h1 class="form-title">Add New Book</h1>
                 <form class="form-add-book">
                     <div class="modal-input-field">
-                        <label for="book-title">Title:</label>
+                        <label for="book-title">Title: </label>
                         <input type="text" 
                         name="book-title" 
                         id="book-title" 
@@ -114,24 +114,28 @@
                     </div>
                     <div class="modal-input-field">
                         <label for="book-pages">Pages:</label>
-                        <input type="number" 
+                        <input type="number"
+                        min="0" 
                         name="book-pages" 
                         id="book-pages" 
                         class="modal-form-input"
                         />
                     </div>
-                    <div class="modal-input-field">
+                    <div class="book-read-status ">
+                        <span class="read-status-text">Read Status?</span>
                         <div class="checkbox-container">
                             <div class="check">
                                 <input type="checkbox" 
                                 name="book-read-status" 
                                 id="check-5" 
-                                class="modal-form-input "
+                                class=" "
                                 />
                                 <label for="check-5"></label>
-                                <div class="read-status-text">Read Status?</div>
                             </div>
                         </div>
+                    </div>
+                    <div class="submit-modal-form">
+                        <button type="submit" class="submit-modal-btn btn"></button>
                     </div>
                 </form>
             </div>
