@@ -1,5 +1,3 @@
-// Array to hold all books
-let bookLibrary = [];
 
 const books = document.querySelector('.books');  // content container div
 const newButton=document.querySelector('.add-book');
@@ -10,18 +8,84 @@ const editModal=document.querySelector('.edit');
 const closeModal=document.querySelector('.span-close');
 
 //event listener to bring up the modal to add books
-newButton.addEventListener('click',(e) => {
-    modalContainer.classList.add('modal-active');
+newButton.addEventListener('click',() => {
+    modalContainer.style.display='block';
     modalTitle.textContent='Add New Book';
     submitBtn.textContent='Add';
 })
 
 //event listener to close modal
 
-closeModal.addEventListener('click',(e) => {
-    modalContainer.classList.remove('modal-active');
+closeModal.addEventListener('click',() => {
+    modalContainer.style.display='none';
 })
 
+window.addEventListener('click', (e) =>{
+    if(e.target==modalContainer){
+        modalContainer.style.display='none';
+    }
+})
+//constructor to create new book
+
+function Book(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.id = Math.floor(Math.random() * 1000000);
+  }
+  
+  function addBookToLibrary(title, author, pages, read) {
+    bookLibrary.push(new Book(title, author, pages, read));
+    saveAndRenderBooks();
+  }
+  
+  const addBookForm = document.querySelector(".form-add-book");
+  addBookForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+  
+    const data = new FormData(e.target);
+    let newBook = {};
+    for (let [name, value] of data) {
+      if (name === "book-read") {
+        newBook["book-read"] = true;
+      } else {
+        newBook[name] = value || "";
+      }
+    }
+    
+    if (!newBook["book-read"]) {
+        newBook["book-read"] = false;
+    }
+    const formTitle=document.querySelector('.form-title');
+    let formTitleText= formTitle.textContent;
+    
+    if (formTitleText.includes('Edit')) {
+        let id = submitBtn.getAttribute('data-book-id'); // Get the book id from the submit button
+        console.log("Editing book with ID:", id);
+        
+        let editBook = bookLibrary.filter((book) => book.id == id)[0];
+        if (editBook) {
+            editBook.title = newBook["book-title"];
+            editBook.author = newBook["book-author"];
+            editBook.pages = newBook["book-pages"];
+            editBook.read = newBook["book-read"];
+            saveAndRenderBooks();
+        } else {
+            console.error("No book found with the given ID");
+        }
+    } else {
+        addBookToLibrary(
+            newBook["book-title"],
+            newBook["book-author"],
+            newBook["book-pages"],
+            newBook["book-read"]
+        );
+    }
+    
+    addBookForm.reset();
+    modal.style.display = "none";
+});
 
 // Function to add local storage - retrieving the local storage 
 function addLocalStorage() {
@@ -36,6 +100,7 @@ function addLocalStorage() {
             author: 'Example Author', 
             pages: 500, 
             read: true,
+            id: Math.floor(Math.random() * 1000000) // Assign a unique ID
         }];
         console.log("No library found, setting default example book"); // Debugging: Log this action
         // Save the default example book to localStorage
@@ -47,6 +112,10 @@ function addLocalStorage() {
     
     saveAndRenderBooks();  // Save and render the page
 }
+
+
+// Array to hold all books
+let bookLibrary = [];
 
 // Function to create individual html elements with class (title, author, etc.)
 function createBookElements(elementName, content, className) {
@@ -74,7 +143,7 @@ function createRead(bookContainer, book) {
     readBtn.setAttribute('name', 'readStatus');
     readBtn.setAttribute('value', book.read ? '1' : '0');
     readBtn.type = "checkbox";
-
+    
     let label = document.createElement('label');
     label.setAttribute('for', checkboxId); // Link the label to the checkbox
     
@@ -162,10 +231,15 @@ function createEditBtn(book) {
     edit.appendChild(icon);
     
     // Event listener for edit functionality (you can implement specific logic here)
-    edit.addEventListener('click', (e) => {
-        modalContainer.classList.add('modal-active');
-        modalTitle.textContent=`Edit ${book.title}`
-        submitBtn.textContent='Edit'
+    edit.addEventListener('click', () => {
+        modalContainer.style.display='block';
+        modalTitle.textContent=`Edit ${book.title}`;
+        submitBtn.textContent='Edit';
+        submitBtn.setAttribute('data-book-id', book.id); // Store the book id in the submit button
+        document.querySelector("#book-title").value = book.title || "";
+        document.querySelector("#book-author").value = book.author || "";
+        document.querySelector("#book-pages").value = book.pages || "";
+        document.querySelector("#book-read").checked = book.read;
     })
     
     return edit;
