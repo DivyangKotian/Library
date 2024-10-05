@@ -228,7 +228,7 @@ body{
   }
 
   .modal {
-    display: block; /* Hidden by default */
+    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 30vh; /* Location of the box */
@@ -241,6 +241,10 @@ body{
     background-color: rgba(3, 31, 36, 0.4); /* Black w/ opacity */
   }
   
+  .modal-active{
+    display: block;
+  }
+
   /* Modal Content */
   .modal-content {
     background-color: #fefefe;
@@ -326,7 +330,7 @@ body{
   }
   
   .submit-modal-btn{
-    width: 65px;
-    height: 27px;
+    width: 85px;
+    height: 35px;
     margin-top: 10px;
   }

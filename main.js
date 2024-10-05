@@ -2,13 +2,33 @@
 let bookLibrary = [];
 
 const books = document.querySelector('.books');  // content container div
+const newButton=document.querySelector('.add-book');
+const modalContainer=document.querySelector('.modal');
+const modalTitle=document.querySelector('.form-title');
+const submitBtn=document.querySelector('.submit-modal-btn');
+const editModal=document.querySelector('.edit');
+const closeModal=document.querySelector('.span-close');
+
+//event listener to bring up the modal to add books
+newButton.addEventListener('click',(e) => {
+    modalContainer.classList.add('modal-active');
+    modalTitle.textContent='Add New Book';
+    submitBtn.textContent='Add';
+})
+
+//event listener to close modal
+
+closeModal.addEventListener('click',(e) => {
+    modalContainer.classList.remove('modal-active');
+})
+
 
 // Function to add local storage - retrieving the local storage 
 function addLocalStorage() {
     // Get the book library from localStorage
     let storedLibrary = localStorage.getItem("book-library");
     console.log("Stored Library:", storedLibrary); // Debugging: Log what's in localStorage
-
+    
     // If no book library exists in localStorage, create a default library with an example book
     if (storedLibrary === null || storedLibrary === '[]') {
         bookLibrary = [{
@@ -24,7 +44,7 @@ function addLocalStorage() {
         bookLibrary = JSON.parse(storedLibrary);  // If data exists, parse and use it
         console.log("Loaded Library from LocalStorage:", bookLibrary); // Debugging: Log loaded library
     }
-
+    
     saveAndRenderBooks();  // Save and render the page
 }
 
@@ -46,7 +66,7 @@ function createRead(bookContainer, book) {
     const statusText = document.createElement('span');
     statusText.setAttribute('class','card-status')
     statusText.textContent = '';
-
+    
     // Create the checkbox input
     let readBtn = document.createElement('input');
     let checkboxId = `check-${book.title.replace(/\s+/g, '-')}-${book.index}`; // Unique ID
@@ -67,7 +87,7 @@ function createRead(bookContainer, book) {
         bookContainer.setAttribute('class', 'card-container book read-false');
         statusText.textContent = 'Status: Unread';
     }
-
+    
     // Add event listener for changing the read status
     readBtn.addEventListener('click', (e) => {
         // Update read status based on checkbox state
@@ -80,7 +100,7 @@ function createRead(bookContainer, book) {
             bookContainer.setAttribute('class', 'card-container book read-false');
             statusText.textContent = 'Status: Unread';
         }
-
+        
         bookContainer.addEventListener('mouseleave', () => {            // i dont want the card to render while hovering cause it was clunky
             setTimeout(()=>{                                    // setTimeout so that the mouse can leave and then the hoverback to orignal scale can take place smoothly
                 saveAndRenderBooks(); // Trigger save and render when the pointer leaves the card, 
@@ -122,7 +142,7 @@ function createIcons() {
     const icon1 = document.createElement('i');
     const icon2 = document.createElement('i');
     const icon3 = document.createElement('i');
-
+    
     icon1.setAttribute('class', 'fa-regular fa-star fa-lg');
     icon2.setAttribute('class', 'fa-regular fa-address-book fa-lg');
     icon3.setAttribute('class', 'fa-regular fa-circle-down fa-lg');
@@ -142,11 +162,12 @@ function createEditBtn(book) {
     edit.appendChild(icon);
     
     // Event listener for edit functionality (you can implement specific logic here)
-    edit.addEventListener('click', () => {
-        console.log("Editing book:", book);
-        // Logic for editing the book (like opening a modal or form for editing)
-    });
-
+    edit.addEventListener('click', (e) => {
+        modalContainer.classList.add('modal-active');
+        modalTitle.textContent=`Edit ${book.title}`
+        submitBtn.textContent='Edit'
+    })
+    
     return edit;
 }
 
