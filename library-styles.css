@@ -1,4 +1,18 @@
 
+
+body{
+  width: 100vw;
+  height: 100vh; /* Make sure the height of the body is 100% */
+  display: grid;
+  gap: 20px;
+  background-color:var(--main-container);
+  grid-template-columns: 5rem 1fr 1fr 0.7fr;
+  grid-template-rows: 0.6fr 4fr 0.1fr;
+  grid-template-areas:    "dashboard header header header"
+  "dashboard maincontent maincontent maincontent"
+  "footer footer footer footer";
+}
+
 .card-container{
     min-width: fit-content;
     background-color: white;
@@ -19,7 +33,18 @@
 .delete {
   position: absolute; /* Position it absolutely within the card container */
   top: 10px;         /* Adjust as needed */
-  right: 10px;       /* Adjust as needed */
+  right: 15px;       /* Adjust as needed */
+  background-color: transparent; /* Remove button background */
+  border: none;                  /* Remove button border */
+  padding: 10px;
+  cursor: pointer;
+  width: fit-content;               /* Pointer cursor on hover */
+}
+
+.edit {
+  position: absolute; /* Position it absolutely within the card container */
+  top: 10px;        
+  right: 50px;       
   background-color: transparent; /* Remove button background */
   border: none;                  /* Remove button border */
   padding: 10px;

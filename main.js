@@ -1,19 +1,34 @@
-const bookLibrary = [{
-    title: 'My new Book',
-    author: 'Me',
-    pages: 100,
-    read: true,
-},
-{
-    title: 'My old Book',
-    author: 'You',
-    pages: 1020,
-    read: false,
-}];
+// Array to hold all books
+let bookLibrary = [];
 
 const books = document.querySelector('.books');  // content container div
 
-// Function to create individual elements (title, author, etc.)
+// Function to add local storage - retrieving the local storage 
+function addLocalStorage() {
+    // Get the book library from localStorage
+    let storedLibrary = localStorage.getItem("book-library");
+    console.log("Stored Library:", storedLibrary); // Debugging: Log what's in localStorage
+
+    // If no book library exists in localStorage, create a default library with an example book
+    if (storedLibrary === null || storedLibrary === '[]') {
+        bookLibrary = [{
+            title: 'Example Book', 
+            author: 'Example Author', 
+            pages: 500, 
+            read: true,
+        }];
+        console.log("No library found, setting default example book"); // Debugging: Log this action
+        // Save the default example book to localStorage
+        localStorage.setItem("book-library", JSON.stringify(bookLibrary));  
+    } else {
+        bookLibrary = JSON.parse(storedLibrary);  // If data exists, parse and use it
+        console.log("Loaded Library from LocalStorage:", bookLibrary); // Debugging: Log loaded library
+    }
+
+    saveAndRenderBooks();  // Save and render the page
+}
+
+// Function to create individual html elements with class (title, author, etc.)
 function createBookElements(elementName, content, className) {
     const elementVar = document.createElement(elementName);
     elementVar.textContent = content; 
@@ -21,97 +36,117 @@ function createBookElements(elementName, content, className) {
     return elementVar;
 }
 
-
-
+// Function to create read status button
 function createRead(bookContainer, book) {
-    // Create the wrapper div with the appropriate class
     const read = document.createElement('div');
     read.setAttribute('class', 'checkbox-container'); // Apply the styling class
-    const checkHolder=document.createElement('div');  // styling container
-    checkHolder.setAttribute('class','check');          //styling class
-    const statusText= document.createElement('h1');
-    statusText.textContent='';
+    
+    const checkHolder = document.createElement('div');  // styling container
+    checkHolder.setAttribute('class', 'check');
+    const statusText = document.createElement('h1');
+    statusText.textContent = '';
+
     // Create the checkbox input
     let readBtn = document.createElement('input');
-    let checkboxId = `check-${book.title.replace(/\s+/g, '-')}-${book.index}`; // Unique ID based on book title, replacs space in title with hyphen and adds index so we can have books with same title as well
+    let checkboxId = `check-${book.title.replace(/\s+/g, '-')}-${book.index}`; // Unique ID
     readBtn.setAttribute('id', checkboxId);
     readBtn.setAttribute('name', 'readStatus');
     readBtn.setAttribute('value', book.read ? '1' : '0');
     readBtn.type = "checkbox";
-    
+
     let label = document.createElement('label');
     label.setAttribute('for', checkboxId); // Link the label to the checkbox
     
-    // Check if the book has been read
+    // Set initial state of checkbox and status text
     if (book.read) {
         readBtn.checked = true;
         bookContainer.setAttribute('class', 'card-container book read-true');
-        statusText.textContent='Status:Read' // label.textContent='Read'
+        statusText.textContent = 'Status: Read';
     } else {
         bookContainer.setAttribute('class', 'card-container book read-false');
-        statusText.textContent='Status:Unread' // label.textContent='Unread'
+        statusText.textContent = 'Status: Unread';
     }
-    
+
     // Add event listener for changing the read status
     readBtn.addEventListener('click', (e) => {
+        // Update read status based on checkbox state
         if (e.target.checked) {
-            bookContainer.setAttribute('class', 'card-container book read-true');
             book.read = true;
-            statusText.textContent='Status:Read' // label.textContent='Read'
+            bookContainer.setAttribute('class', 'card-container book read-true');
+            statusText.textContent = 'Status: Read';
         } else {
-            bookContainer.setAttribute('class', 'card-container book read-false');
             book.read = false;
-            statusText.textContent='Status:Unread'// label.textContent='Unread'
+            bookContainer.setAttribute('class', 'card-container book read-false');
+            statusText.textContent = 'Status: Unread';
         }
+
+        bookContainer.addEventListener('mouseleave', () => {            // i dont want the card to render while hovering cause it was clunky
+            setTimeout(()=>{                                    // setTimeout so that the mouse can leave and then the hoverback to orignal scale can take place smoothly
+                saveAndRenderBooks(); // Trigger save and render when the pointer leaves the card, 
+            },400);
+        });
     });
-    
-    // Create the label for the checkbox
-    
-    // Append the checkbox and label to the wrapper
+
     checkHolder.appendChild(readBtn);
     checkHolder.appendChild(label);
     read.appendChild(checkHolder);
-    read.appendChild(statusText)
+    read.appendChild(statusText);
     
-    return read;                             // returing to the createBookContainer function
+    return read;
 }
-function createDelBtn(book){
-    const del=document.createElement('button');
-    del.setAttribute('class','delete card-icons')
-    const icon= document.createElement('i');
-    icon.setAttribute('class','fa-solid fa-trash fa-lg');
+
+
+// Function to delete a book
+function deleteBook(index) {
+    bookLibrary.splice(index, 1);
+    saveAndRenderBooks();
+}
+
+// Function to create a delete button
+function createDelBtn(book, index) {
+    const del = document.createElement('button');
+    del.setAttribute('class', 'delete card-icons');
+    const icon = document.createElement('i');
+    icon.setAttribute('class', 'fa-solid fa-trash fa-lg');
     del.appendChild(icon);
+    del.addEventListener('click', () => {
+        deleteBook(index);
+    });
     return del;
 }
 
-// function createDelBtn(book){
-//     const del=document.createElement('button');
-//     del.setAttribute('class','delete')
-//     const icon= document.createElement('img');
-//     icon.setAttribute('class','del-img');
-//     icon.setAttribute('src','icons/delete.svg');
-//     del.appendChild(icon);
-//     return del;
-// }
+// Function to create other icons (dummy, no function)
+function createIcons() {
+    const iconsContainer = createBookElements('div', null, 'card-icons');
+    const icon1 = document.createElement('i');
+    const icon2 = document.createElement('i');
+    const icon3 = document.createElement('i');
 
-function createIcons(){
-    const iconsContainer= createBookElements('div', null, 'card-icons');
-    const icon1= document.createElement('i');
-    const icon2= document.createElement('i');
-    const icon3= document.createElement('i');
-
-    icon1.setAttribute('class','fa-regular fa-star fa-lg');
-    icon2.setAttribute('class','fa-regular fa-address-book fa-lg');
-    icon3.setAttribute('class','fa-solid fa-download fa-lg');
+    icon1.setAttribute('class', 'fa-regular fa-star fa-lg');
+    icon2.setAttribute('class', 'fa-regular fa-address-book fa-lg');
+    icon3.setAttribute('class', 'fa-regular fa-circle-down fa-lg');
     
     iconsContainer.appendChild(icon1);
     iconsContainer.appendChild(icon2);
     iconsContainer.appendChild(icon3);
-    return iconsContainer
+    return iconsContainer;
 }
 
-function createEditBtn(book){
+// Function to create the edit button
+function createEditBtn(book) {
+    const edit = document.createElement('button');
+    edit.setAttribute('class', 'edit card-icons');
+    const icon = document.createElement('i');
+    icon.setAttribute('class', 'fa-solid fa-pencil fa-lg');
+    edit.appendChild(icon);
+    
+    // Event listener for edit functionality (you can implement specific logic here)
+    edit.addEventListener('click', () => {
+        console.log("Editing book:", book);
+        // Logic for editing the book (like opening a modal or form for editing)
+    });
 
+    return edit;
 }
 
 // Function to create the book container for each book
@@ -120,44 +155,42 @@ function createBookContainer(book, index) {
     bookContainer.setAttribute('id', index);
     bookContainer.setAttribute('key', index); 
     bookContainer.setAttribute('class', 'card-container book');
-    const buttonHolder= createBookElements('div', null,'btn-holder');
-    const textHolder= createBookElements('div', null, 'text-holder');
+    const buttonHolder = createBookElements('div', null, 'btn-holder');
+    const textHolder = createBookElements('div', null, 'text-holder');
     
-    // Append the book details
-    bookContainer.appendChild(buttonHolder)
-    buttonHolder.appendChild(createDelBtn(book));
-
+    bookContainer.appendChild(buttonHolder);
     bookContainer.appendChild(textHolder);
     
-    textHolder.appendChild(
-        createBookElements('h1', `Title: ${book.title}`, 'book-title')
-    );
-    textHolder.appendChild(
-        createBookElements('h1', `Author: ${book.author}`, 'book-author')
-    );
-    textHolder.appendChild(
-        createBookElements('h1', `Pages: ${book.pages}`, 'book-pages')
-    );
-    textHolder.appendChild(createRead(bookContainer,book));
-
-    // bookContainer.appendChild(createEditBtn(book));
+    buttonHolder.appendChild(createDelBtn(book, index));
+    buttonHolder.appendChild(createEditBtn(book));
+    
+    textHolder.appendChild(createBookElements('h1', `Title: ${book.title}`, 'book-title'));
+    textHolder.appendChild(createBookElements('h1', `Author: ${book.author}`, 'book-author'));
+    textHolder.appendChild(createBookElements('h1', `Pages: ${book.pages}`, 'book-pages'));
+    textHolder.appendChild(createRead(bookContainer, book));
     bookContainer.appendChild(createIcons());
-
-    
-    
-    // Insert the book container into the DOM, I'm going for a chronological method, so oldest book stays first child of the container div, so new elements added before end
-    //using an alternative to appendChild() for practice, but with insetAdjacentElement i can make it so that the new book
-    //is the first child, hence we can make a recently added section etc
 
     books.insertAdjacentElement("beforeend", bookContainer);
 }
 
 // Function to render the book library
 function booksRender() {
+    books.textContent = ""; // Clear previous content to avoid duplicates
     bookLibrary.map((book, index) => {
         createBookContainer(book, index);
     });
 }
 
-// Render the books
-booksRender();
+// Function to save the book library and render it
+function saveAndRenderBooks() {
+    localStorage.setItem("book-library", JSON.stringify(bookLibrary)); // Save to localStorage
+    booksRender(); // Re-render the updated library
+}
+
+window.addEventListener('beforeunload', () => {
+    saveAndRenderBooks(); // Ensure the latest state is saved on refresh
+});
+
+
+// Render on page load
+addLocalStorage();
